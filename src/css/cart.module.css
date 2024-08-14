@@ -1,0 +1,12 @@
+.container{
+    background-color: rgba(0, 0, 0, 0.301);
+    width: 150px;
+    height: fit-content;
+    color: white;
+    font-family: serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25%;  
+}
