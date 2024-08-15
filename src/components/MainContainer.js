@@ -17,8 +17,9 @@ function MainContainer(props) {
         score={props.score} setScore={props.setScore}
         handleAvatarClicked={props.handleAvatarClicked}
         newShuffle={props.newShuffle} setNewShuffle={props.setNewShuffle}
+        setStart={props.setStart}
         rearrange={props.rearrange}
-        // handleAvatarClicked={props.handleAvatarClicked}
+        reset={props.reset}
       />
     </>
   )

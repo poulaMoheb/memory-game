@@ -3,32 +3,38 @@ import { useState } from 'react';
 import MainContainer from './components/MainContainer';
 
 function App() {
-  let count
   // chosen pokes
   let [newShuffle,setNewShuffle]=useState([])
   let [chosenOnes,setChosenOnes]=useState([])
   let handleDropdown = (item) =>{
-    setChosenHardness(item)
+    setChosenHardness(Number(item))
   }
   let [pokes,setPokes]=useState([])
   
   let handleStart = () =>{
     setStart(true)
   }
-  const random = () =>{
-    return pokes[Math.floor(Math.random()*pokes.length)]
+  const random = (Arr) =>{
+    return Arr[Math.floor(Math.random()*Arr.length)]
   }
   const rearrange = () =>{
-    for(let i=0; i<pokes.length;i++){
-      let rand=random()
-      setPokes([...pokes.splice(rand)])
-      setNewShuffle([...newShuffle,rand])
-      console.log(...pokes);
-      setNewShuffle([...newShuffle])
+    let shuffler=[]
+    let shuffleList=[]
+    for(let i=0;i<pokes.length;i++){
+      shuffleList=[...shuffleList,i]
     }
-    setPokes(newShuffle)
+    for(let i=0; i<pokes.length;i++){
+      let rand=random(shuffleList)
+      shuffler=[...shuffler,pokes[rand]]
+      shuffleList=[...shuffleList.filter((e)=>e!==rand)]
+    }
+    setPokes(shuffler)
+  }
+  const reset = () =>{
     setStart(false)
-
+    setScore(0)
+    setPokes([])
+    setChosenOnes([])
   }
   const hardness=[
     {
@@ -55,7 +61,7 @@ function App() {
       {!start&&<div>
         <select className={style.dropDown} onChange={(e)=>handleDropdown(e.target.value)} name='Hardness' id='hardnessDropDown'>
           {hardness.map((item)=>{
-            return <option key={item.total} value={item.total}>{item.name}</option>
+            return <option key={item.total} value={Number(item.total)}>{item.name}</option>
           })}
         </select>
         <button className={style.startButton} onClick={()=>{handleStart()}}>Start</button>
@@ -67,7 +73,9 @@ function App() {
                         chosenOnes={chosenOnes} setChosenOnes={setChosenOnes}
                         hardness={chosenHardness}
                         newShuffle={newShuffle} setNewShuffle={setNewShuffle}
+                        setStart={setStart}
                         rearrange={rearrange}
+                        reset={reset}
                         />
       }
     </div>
