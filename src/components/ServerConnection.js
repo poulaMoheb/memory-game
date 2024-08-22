@@ -7,6 +7,8 @@ import { type } from '@testing-library/user-event/dist/type'
 function ServerConnection(props) {
   let [highest,setHighest]=useState(false)
   let [loser,setLoser]=useState(false)
+  let [isLoading,setIsLoading]=useState(true)
+  let [error,setError]=useState(null)
   let score=props.score
   
   function handleAvatarClicked(item){
@@ -17,12 +19,7 @@ function ServerConnection(props) {
   let lost =()=>{
     setLoser(true)
     LostGame()
-    // return(
-    //   <div>
-    //     <h4>You Lost!!</h4>
-    //     <button onClick={()=>props.setStart(false)}>Try again</button>
-    //   </div>
-    // )
+
   }
    
   let winRound=(item)=>{
@@ -56,9 +53,19 @@ function ServerConnection(props) {
       .then(response=>response.json())
       .then(data =>{
         props.setPokes(data.results)
-      }) 
-    }, [props.amount])
 
+      }) 
+      .catch((error)=>{})
+      // .finally(()=>setIsLoading(false))
+    }, [props.amount])
+    // if(isLoading)
+    //   return(
+    // <div className={style.loading}>
+    //   <div id={style.loadingIcon}>
+    //     ...loading
+    //   </div>
+    // </div>
+    // )
     return(
       <div className={style.container}>
       {props.pokes&&!highest&&!loser&&props.pokes.map(item=>(

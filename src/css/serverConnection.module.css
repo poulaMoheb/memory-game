@@ -5,3 +5,21 @@
     align-self: center  ;
     
 }
+.loading{
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(39, 38, 38, 0.808) ;
+    height: 100%;
+    width: 100%;
+}
+#loadingIcon{
+    border-top: 1px solid rgb(77, 41, 41);
+    animation: loadingTrans 2s infinite;
+}
+@keyframes loadingTrans{
+    100% {transform: 360deg}
+}

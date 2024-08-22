@@ -1,7 +1,10 @@
 import style from './css/App.module.css';
 import { useState } from 'react';
 import MainContainer from './components/MainContainer';
-
+import { Authenticator } from '@aws-amplify/ui-react';
+import { Amplify } from 'aws-amplify';
+import {awsExports} from './aws-exports'
+Amplify.configure(awsExports)
 function App() {
   // chosen pokes
   let [newShuffle,setNewShuffle]=useState([])
@@ -55,7 +58,11 @@ function App() {
   let [highScore,setHighScore]=useState(0)
   let [score,setScore]=useState(0)
   return (
-    <div className={style.container}>
+    <Authenticator>
+      {({signOut,user})=>(
+
+        <div className={style.container}>
+          <button onClick={signOut}>sign out</button>
       <h1>HELLO, to the memory game</h1>
       <p>let's start</p>
       {!start&&<div>
@@ -68,17 +75,19 @@ function App() {
       </div>}
       {start
       &&<MainContainer  highScore={highScore} setHighScore={setHighScore}
-                        score={score} setScore={setScore}
-                        pokes={pokes} setPokes={setPokes}
-                        chosenOnes={chosenOnes} setChosenOnes={setChosenOnes}
-                        hardness={chosenHardness}
-                        newShuffle={newShuffle} setNewShuffle={setNewShuffle}
-                        setStart={setStart}
-                        rearrange={rearrange}
-                        reset={reset}
-                        />
-      }
+      score={score} setScore={setScore}
+      pokes={pokes} setPokes={setPokes}
+      chosenOnes={chosenOnes} setChosenOnes={setChosenOnes}
+      hardness={chosenHardness}
+      newShuffle={newShuffle} setNewShuffle={setNewShuffle}
+      setStart={setStart}
+      rearrange={rearrange}
+      reset={reset}
+      />
+    }
     </div>
+    )}
+    </Authenticator>
   );
 }
 
